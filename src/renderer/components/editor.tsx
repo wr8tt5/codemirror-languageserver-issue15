@@ -3,10 +3,10 @@ import { Facet, Extension } from '@codemirror/state'
 import { javascript } from '@codemirror/lang-javascript'
 import { languageServerWithTransport } from 'codemirror-languageserver'
 import React from 'react'
-import { WebSocketTransport } from '@open-rpc/client-js'
+import { DummyTransport } from '../dummy_transport'
 
 const lsOptions = {
-    transport: new WebSocketTransport("ws://localhost:8000"),
+    transport: new DummyTransport(),
     rootUri: 'file:///',
     documentUri: 'file:///myfile.ts',
     languageId: 'typescript',
@@ -16,11 +16,6 @@ const lsOptions = {
 var ls: Extension[] = languageServerWithTransport({...lsOptions})
 
 export const Editor = React.memo(function Editor() {
-    //const [ value, setValue ] = React.useState('')
-
-    //const onChange = (value: string) => {
-    //    setValue(value)
-    //}
 
     return (
         <CodeMirror
@@ -28,8 +23,6 @@ export const Editor = React.memo(function Editor() {
                 javascript({ typescript: true }),
                 ls
             ]}
-            //value={value}
-            //onChange={onChange}
             height="200px"
         />
     )
